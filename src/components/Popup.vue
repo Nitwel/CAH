@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'About',
+  name: 'Popup',
   props: {
     msg: String
   }

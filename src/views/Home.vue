@@ -1,18 +1,54 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="home">
+      <div class="title">Cards against Humanity</div>
+      <User name="Heinz" large/>
+      <div class="start">
+        <Input placeholder="Enter lobby name..." v-model="name"/>
+        <Button @click="onClick">Join</Button>
+      </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  data () {
+    return {
+      name: ''
+    }
+  },
+  props: {
+
+  },
+  methods: {
+    onClick () {
+      if (this.name) { this.$router.push(`/lobby/${this.name}`) }
+    }
   }
 }
 </script>
+<style scoped lang="scss">
+#home {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    font-size: 90px;
+  }
+
+  .user {
+    margin: 50px 0;
+  }
+
+  .start {
+    .button {
+      margin-left: 20px;
+    }
+  }
+}
+</style>
