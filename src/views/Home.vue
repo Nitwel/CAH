@@ -3,8 +3,8 @@
     <div class="title">Cards against Humanity</div>
     <User :name="name" large hideName/>
     <div class="start">
-      <Input placeholder="Your name..." v-model="name"/>
-      <Input v-if="showLobbyInput" placeholder="Enter lobby name..." v-model="lobby"/>
+      <Input placeholder="Your name..." v-model="name" maxlength="12"/>
+      <Input v-if="showLobbyInput" placeholder="Enter lobby name..." v-model="lobby" maxlength="20"/>
       <Button @click="onClick">Join</Button>
     </div>
   </div>

@@ -16,8 +16,8 @@
             @click.native="selected(pos)"
           >
             <User v-if="!allPlaced" :name="user.name" :small="!user.placed" :x-small="user.placed" class="abs"/>
-            <span class="questionmark abs" v-if="user.placed && !revealed[pos]">?</span>
-            <span class="revealed" v-if="revealed[pos]">{{revealed[pos][i]}}</span>
+            <span class="questionmark abs" v-if="user.placed && !isRevealed(pos)">?</span>
+            <span class="revealed" v-if="isRevealed(pos)">{{revealed[pos][i]}}</span>
             <transition name="scaleSelect">
               <Button v-if="isZar && allRevealed && i == blackCard.pick - 1" class="winner abs" icon="done" rounded @click="onSelectWinner(pos)"></Button>
             </transition>
@@ -97,6 +97,9 @@ export default {
     }
   },
   methods: {
+    isRevealed (pos) {
+      return this.revealed[pos] && this.revealed[pos].length > 0
+    },
     selected (pos) {
       if (!this.isZar || !this.allPlaced || this.revealed[pos]) return
 

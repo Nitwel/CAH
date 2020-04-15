@@ -54,6 +54,8 @@ export default new Vuex.Store({
       })
     },
     reveal_cards ({ state }, pos) {
+      vm.$set(state.revealed, pos, [])
+
       vm.$socket.emit('reveal', pos, (response) => {
         if (response && response.error) {
           console.error(response.error)
