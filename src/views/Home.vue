@@ -1,11 +1,12 @@
 <template>
   <div id="home">
-      <div class="title">Cards against Humanity</div>
-      <User name="Heinz" large/>
-      <div class="start">
-        <Input placeholder="Enter lobby name..." v-model="name"/>
-        <Button @click="onClick">Join</Button>
-      </div>
+    <div class="title">Cards against Humanity</div>
+    <User :name="name" large hideName/>
+    <div class="start">
+      <Input placeholder="Your name..." v-model="name"/>
+      <Input v-if="showLobbyInput" placeholder="Enter lobby name..." v-model="lobby"/>
+      <Button @click="onClick">Join</Button>
+    </div>
   </div>
 </template>
 
@@ -14,15 +15,38 @@ export default {
   name: 'Home',
   data () {
     return {
-      name: ''
+      showLobbyInput: true
     }
+  },
+  created () {
+    if (this.lobby !== '') this.showLobbyInput = false
   },
   props: {
 
   },
+  computed: {
+    name: {
+      get () {
+        return this.$store.state.name
+      },
+      set (val) {
+        this.$store.state.name = val
+      }
+    },
+    lobby: {
+      get () {
+        return this.$store.state.lobby
+      },
+      set (val) {
+        this.$store.state.lobby = val
+      }
+    }
+  },
   methods: {
     onClick () {
-      if (this.name) { this.$router.push(`/lobby/${this.name}`) }
+      if (this.name && this.lobby) {
+        this.$store.dispatch('join_lobby')
+      }
     }
   }
 }
@@ -46,6 +70,15 @@ export default {
   }
 
   .start {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    input {
+      margin-bottom: 5px;
+    }
+
     .button {
       margin-left: 20px;
     }

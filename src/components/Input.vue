@@ -19,19 +19,19 @@ export default {
 </script>
 <style lang="scss" scoped>
 .input {
-    color: var(--dark-grey);
-    height: 54px;
-    padding: 5px 30px;
-    border: 4px solid var(--grey);
-    border-radius: 10px;
-    font-size: 30px;
-    font-weight: 500;
+  color: var(--dark-grey);
+  height: 54px;
+  padding: 5px 30px;
+  border: 4px solid var(--grey);
+  border-radius: 10px;
+  font-size: 30px;
+  font-weight: 500;
 
-    &:focus, &:hover {
-    }
+  &:focus, &:hover {
+  }
 
-    &:focus * {
-        outline: none;
-    }
+  &:focus * {
+    outline: none;
+  }
 }
 </style>
