@@ -74,8 +74,8 @@ export default new Vuex.Store({
     leave_lobby ({ state }) {
       vm.$socket.emit('leave', name)
     },
-    change_card_deck ({ state }, deck) {
-      vm.$socket.emit('change_deck', deck)
+    change_settings ({ state }, settings) {
+      vm.$socket.emit('change_settings', settings)
     }
   },
   getters: {

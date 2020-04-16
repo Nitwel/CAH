@@ -32,7 +32,6 @@ export default {
     SOCKET_next_round (context, { hand, black, zar, winner }) {
       this.state.hands = hand
       this.state.blackCard = black
-      this.state.blackCard.pick = 2
       this.state.zar = zar
       this.state.revealed = {}
       this.state.tempIds = {}
@@ -50,6 +49,7 @@ export default {
       this.state.tempIds = {}
 
       this.state.users.forEach((user, index) => {
+        vm.$set(this.state.users[index], 'placed', false)
         vm.$set(this.state.users[index], 'points', points[user.name])
       })
 
@@ -69,11 +69,8 @@ export default {
       vm.$set(this.state.revealed, pos, cards)
       vm.$set(this.state.tempIds, pos, tempId)
     },
-    SOCKET_winner (context, data) {
-
-    },
-    SOCKET_deck_change (context, data) {
-
+    SOCKET_settings_changed (context, settings) {
+      console.log(settings)
     }
   }
 }
