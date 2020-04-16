@@ -107,6 +107,9 @@ export default {
       this.$store.dispatch('reveal_cards', pos)
     },
     onSelectWinner (pos) {
+      var audio = new Audio('/sounds/plopplop.mp3')
+      audio.play()
+
       this.$store.dispatch('winner', pos)
     }
   }
@@ -152,9 +155,11 @@ export default {
       flex-wrap: wrap;
 
       .user-slot {
+        perspective: 800px;
 
         .card {
           margin: 15px;
+          transform-style: preserve-3d;
 
           &.placed {
             --card-top: 10px;

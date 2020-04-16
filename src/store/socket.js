@@ -32,6 +32,7 @@ export default {
     SOCKET_next_round (context, { hand, black, zar, winner }) {
       this.state.hands = hand
       this.state.blackCard = black
+      this.state.blackCard.pick = 2
       this.state.zar = zar
       this.state.revealed = {}
       this.state.tempIds = {}
@@ -62,6 +63,8 @@ export default {
       })
     },
     SOCKET_cards_revealed (context, { pos, tempId, cards }) {
+      var audio = new Audio('/sounds/reveal.mp3')
+      audio.play()
       Events.$emit('rotate_' + pos)
       vm.$set(this.state.revealed, pos, cards)
       vm.$set(this.state.tempIds, pos, tempId)

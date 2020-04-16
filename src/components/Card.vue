@@ -45,13 +45,12 @@ export default {
     if (this.eventId !== undefined) {
       Events.$on('rotate_' + this.eventId, () => {
         const card = this.$refs.card
-
         if (!card) return
 
         card.classList.add('rotating')
         setTimeout(() => {
           card.classList.remove('rotating')
-        }, 650)
+        }, 600)
       })
     }
   }
@@ -128,14 +127,21 @@ export default {
     &.rotating {
       transition-duration: 0s;
       animation: rotate 600ms ease-in-out;
-      transform: perspective(600px) rotateY(0deg) rotateX(0deg);
+      transform: rotateY(0deg) rotateX(0deg);
 
       @keyframes rotate {
-        from {
-          transform: perspective(600px) rotateY(180deg) rotateX(0deg);
+        0% {
+          transform: rotateY(180deg) rotateX(0deg);
+          color: var(--white);
         }
-        to {
-          transform: perspective(600px) rotateY(0deg) rotateX(0deg);
+        49% {
+          color: var(--white);
+        }
+        50% {
+          color: unset;
+        }
+        100% {
+          transform: rotateY(0deg) rotateX(0deg);
         }
       }
 

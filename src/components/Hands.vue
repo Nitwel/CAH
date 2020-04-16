@@ -113,6 +113,11 @@ export default {
             top = bounds.top
             left = bounds.left
           } else {
+            if (!this.dragging.classList.contains('moving')) {
+              var audio = new Audio('/sounds/swip.mp3')
+              audio.play()
+            }
+
             this.dragging.classList.add('moving')
             if (this.inSlot[id] === this.dragging) {
               this.$delete(this.inSlot, id)
@@ -158,6 +163,9 @@ export default {
         this.dragging.style.left = ''
         this.dragging.classList.remove('global')
         this.$refs.hand.appendChild(this.dragging)
+
+        const audio = new Audio('/sounds/zpfw.mp3')
+        audio.play()
       } else {
         const oldSlot = this.inSlot[this.nearSlot]
         if (oldSlot && oldSlot !== this.dragging) {
@@ -178,8 +186,12 @@ export default {
           this.slotted = setTimeout(() => {
             d.classList.remove('slotted')
           }, this.plotAnimation + 100)
+
+          const audio = new Audio('/sounds/pflp.mp3')
+          audio.play()
         }
       }
+
       this.dragging.classList.remove('moving')
       this.dragging = undefined
       this.nearSlot = null
@@ -187,7 +199,9 @@ export default {
     onSelect () {
       this.placed = true
       const cards = Object.values(this.inSlot).map(slot => this.hands[parseInt(slot.id)])
-      console.log(this.inSlot, cards)
+
+      var audio = new Audio('/sounds/plopplop.mp3')
+      audio.play()
 
       this.$store.dispatch('place_cards', cards)
     }
@@ -217,6 +231,10 @@ body .card {
 
   &.slotted .card-element {
     animation: slotted var(--slotted-time);
+  }
+
+  .moving {
+    z-index: 20;
   }
 
   .accept {
