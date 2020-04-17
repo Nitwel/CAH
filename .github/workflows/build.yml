@@ -44,5 +44,5 @@ jobs:
         ftp-server: ftp://178.254.38.252/httpdocs
         ftp-username: ${{ secrets.FTP_USERNAME }}
         ftp-password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./dist/
+        local-dir: dist
         git-ftp-args: --all
