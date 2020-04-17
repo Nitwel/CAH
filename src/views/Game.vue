@@ -1,9 +1,9 @@
 <template>
   <div class="game">
     <div class="title">{{title}}</div>
-    <div class="points">
+    <!-- <div class="points">
       <span v-for="user in points" :key="user.name">{{user.name}} has {{user.points}} points.</span>
-    </div>
+    </div> -->
     <div class="table">
       <div class="slots">
         <div class="user-slot" v-for="(user, pos) in users" :key="user.name">
@@ -17,7 +17,7 @@
           >
             <User v-if="!allPlaced" :name="user.name" :small="!user.placed" :x-small="user.placed" class="abs"/>
             <span class="questionmark abs" v-if="user.placed && !isRevealed(pos)">?</span>
-            <span class="revealed" v-if="isRevealed(pos)">{{revealed[pos][i]}}</span>
+            <span class="revealed" v-if="isRevealed(pos)" v-html="revealed[pos][i]"></span>
             <transition name="scaleSelect">
               <Button v-if="isZar && allRevealed && i == blackCard.pick - 1" class="winner abs" icon="done" rounded @click="onSelectWinner(pos)"></Button>
             </transition>
@@ -32,7 +32,7 @@
         </div>
       </div>
       <Card class="black" black>
-        {{blackCard.text}}
+        <span v-html="blackCard.text"></span>
       </Card>
     </div>
     <Hands :disabled="isZar" :allPlaced="allPlaced"/>
@@ -76,6 +76,9 @@ export default {
     revealed () {
       return this.$store.state.revealed
     },
+    zar () {
+      return this.$store.state.zar
+    },
     title () {
       if (this.isZar) {
         if (this.allPlaced && !this.allRevealed) {
@@ -87,11 +90,11 @@ export default {
         }
       } else {
         if (this.allPlaced && !this.allRevealed) {
-          return 'The zar is revealing the cards!'
+          return `${this.zar} is revealing the cards!`
         } else if (this.allRevealed) {
-          return 'The zar is selecting is favorite!'
+          return `${this.zar} The zar is selecting is favorite!`
         } else {
-          return 'Place your cards!'
+          return `Place your cards! ${this.zar} is the zar.`
         }
       }
     }

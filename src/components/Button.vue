@@ -1,5 +1,5 @@
 <template>
-  <button @click="$emit('click')" class="button" :class="{icon, rounded}">
+  <button @click="$emit('click')" class="button" :class="{icon, rounded, disabled}">
       <span v-if="icon" class="icon material-icons">{{icon}}</span>
       <slot v-else/>
   </button>
@@ -14,6 +14,10 @@ export default {
       default: null
     },
     rounded: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
       type: Boolean,
       default: false
     }
@@ -45,6 +49,15 @@ export default {
 
     &:active {
         transform: scale(0.95);
+    }
+
+    &.disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+
+      &:active {
+        transform: unset;
+      }
     }
 
     &.icon {

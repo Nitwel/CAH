@@ -1,11 +1,17 @@
 <template>
   <div id="app">
     <router-view/>
+    <Alert/>
   </div>
 </template>
 <script>
+import Alert from '@/components/Alert'
+
 export default {
   name: 'App',
+  components: {
+    Alert
+  },
   destroyed () {
     this.$store.dispatch('leave_lobby')
   }
@@ -32,6 +38,7 @@ body {
   --gold: #EBD129;
   --silver: #B5B5B5;
   --bronze: #D28410;
+  --red: #FF5151;
 }
 
 #app {

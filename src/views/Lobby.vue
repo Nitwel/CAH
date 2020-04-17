@@ -9,17 +9,28 @@
       </div>
       <User v-if="!endLobby" name="invite" class="invite" invite></User>
     </div>
-    <div class="settings" v-if="$store.state.host == $store.state.name">
-      <label>Card decks</label>
-      <multiselect v-model="selected" :options="card_decks" taggable multiple label="name" track-by="value">
-        <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.name }}</strong></template>
-      </multiselect>
-      <label>Points to win</label>
-      <input type="number" v-model="pointsToWin" name="points to win">
-      <label>Hand size</label>
-      <input type="number" v-model="handSize" name="points to win">
+    <div class="settings">
+      <div>
+        <label>Card decks</label>
+        <multiselect v-if="host" v-model="selected" :options="card_decks" taggable multiple label="name" track-by="value" :searchable="false">
+          <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.name }}</strong></template>
+        </multiselect>
+        <multiselect v-else :value="readonlyDecks" :options="card_decks" taggable multiple disabled>
+          <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.name }}</strong></template>
+        </multiselect>
+      </div>
+      <div>
+        <label>Points to win</label>
+        <input v-if="host" type="number" v-model="pointsToWin">
+        <input v-else type="text" :value="$store.state.pointsToWin" disabled>
+      </div>
+      <div>
+        <label>Hand size</label>
+        <input v-if="host" type="number" v-model="handSize">
+        <input v-else type="text" :value="$store.state.handSize" disabled>
+      </div>
     </div>
-    <div class="actions" v-if="$store.state.host == $store.state.name">
+    <div class="actions" v-if="host">
       <Button @click="saveSettings">Save Settings</Button>
       <Button @click="onClick">{{endLobby? "Next Round" : "Start"}}</Button>
     </div>
@@ -64,6 +75,13 @@ export default {
     }
   },
   computed: {
+    readonlyDecks () {
+      const decks = this.$store.state.cardDecks
+      return this.card_decks.filter(d => decks.includes(d.value)).map(d => d.name)
+    },
+    host () {
+      return this.$store.state.host === this.$store.state.name
+    },
     endLobby () {
       return this.$store.state.endLobby
     },
@@ -71,13 +89,14 @@ export default {
       const users = this.$store.state.users
       if (this.endLobby) {
         const sorted = [...users]
+        const ranks = ['gold', 'silver', 'bronze']
+
         sorted.sort((a, b) => b.points - a.points)
-        console.log(sorted)
 
         users.forEach(user => {
-          if (user.name === sorted[0].name) user.trophy = 'gold'
-          if (user.name === sorted[1].name) user.trophy = 'silver'
-          if (user.name === sorted[2].name) user.trophy = 'bronze'
+          for (let i = 0; i < 3 && i < sorted.length; i++) {
+            if (user.name === sorted[i].name) user.trophy = ranks[i]
+          }
         })
       }
       return users
@@ -136,11 +155,64 @@ export default {
   .settings {
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin-bottom: 20px;
+    font-size: 25px;
 
-    .multiselect {
-      margin: 5px 0;
-      min-width: 200px;
+    > div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input {
+      padding: 8px;
+      color: var(--dark-grey);
+      border: 4px solid var(--grey);
+      border-radius: 10px;
+      font-size: 20px;
+      font-weight: 500;
+
+      &:disabled {
+        background: var(--white);
+      }
+    }
+
+    ::v-deep .multiselect {
+      margin: 2px 0;
+      min-width: 300px;
+
+      .multiselect__select {
+        height: 100%;
+        transform-origin: 50% calc(50% + 1px);
+
+      }
+
+      &.multiselect--disabled {
+        opacity: 1;
+
+        .multiselect__select {
+          display: none;
+        }
+
+        .multiselect__tags {
+          padding-right: 0px;
+        }
+      }
+
+      .multiselect__tags {
+        color: var(--dark-grey);
+        border: 4px solid var(--grey);
+        border-radius: 10px;
+        font-size: 20px;
+        font-weight: 500;
+
+        .multiselect__tags-wrap {
+
+          .multiselect__tag {
+            // margin: 0px 5px 0px 0px;
+          }
+        }
+      }
     }
   }
 

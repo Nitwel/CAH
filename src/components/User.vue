@@ -3,6 +3,11 @@
     <avataaar v-if="!invite" class="image" avatar-style="Circle" v-bind="look"></avataaar>
     <img v-else class="invite" src="../assets/add.svg" alt="add">
     <div v-if="name && !hideName" class="name">{{name}}</div>
+    <div class="info" v-if="!invite">
+      <span class="title">Player info</span>
+      <span>Name: {{name}}</span>
+      <span>Points: {{user.points || 0}}</span>
+    </div>
   </div>
 </template>
 
@@ -43,6 +48,9 @@ export default {
     }
   },
   computed: {
+    user () {
+      return this.$store.state.users.find(user => user.name === this.name)
+    },
     look () {
       const data = AvataaarMetadata
       delete data.avatarStyle
@@ -77,6 +85,7 @@ export default {
 .user {
   --user-width: 180px;
   font-size: 35px;
+  position: relative;
 
   &.large {
     --user-width: 250px;
@@ -131,7 +140,31 @@ export default {
     filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.25))
   }
 
-  .name {
+  &:hover .info {
+    display: flex;
+  }
+
+  .info {
+    z-index: 30;
+    position: absolute;
+    top: 0;
+    left: 80%;
+    background-color: var(--white);
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
+    display: none;
+
+    padding: 8px 16px;
+    flex-direction: column;
+    border-radius: 5px;
+
+    span {
+      white-space: nowrap;
+      font-size: 16px;
+
+      &.title {
+        font-size: 20px;
+      }
+    }
   }
 
 }

@@ -5,7 +5,10 @@
     <div class="start">
       <Input placeholder="Your name..." v-model="name" maxlength="12"/>
       <Input v-if="showLobbyInput" placeholder="Enter lobby name..." v-model="lobby" maxlength="20"/>
-      <Button @click="onClick">Join</Button>
+      <div>
+        <Button v-if="!showLobbyInput" @click="resetLobby">Change Lobby</Button>
+        <Button @click="onClick" :disabled="!connected">Join</Button>
+      </div>
     </div>
   </div>
 </template>
@@ -40,13 +43,31 @@ export default {
       set (val) {
         this.$store.state.lobby = val
       }
+    },
+    connected () {
+      return this.$store.state.connected
     }
   },
   methods: {
     onClick () {
-      if (this.name && this.lobby) {
-        this.$store.dispatch('join_lobby')
+      if (!this.connected) {
+        this.$root.$emit('error', 'Not connected to the server.')
+        return
       }
+
+      if (!this.name) {
+        this.$root.$emit('error', 'You must provide a user name.')
+        return
+      }
+
+      if (!this.lobby) {
+        this.$root.$emit('error', 'You must provide a lobby name.')
+        return
+      }
+      this.$store.dispatch('join_lobby')
+    },
+    resetLobby () {
+      this.showLobbyInput = true
     }
   }
 }
@@ -76,7 +97,7 @@ export default {
     align-items: center;
 
     input {
-      margin-bottom: 5px;
+      margin-bottom: 10px;
     }
 
     .button {

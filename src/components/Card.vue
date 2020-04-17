@@ -11,8 +11,6 @@
 </template>
 
 <script>
-import Events from '../events'
-
 export default {
   name: 'Card',
   props: {
@@ -43,7 +41,7 @@ export default {
   },
   created () {
     if (this.eventId !== undefined) {
-      Events.$on('rotate_' + this.eventId, () => {
+      this.$root.$on('rotate_' + this.eventId, () => {
         const card = this.$refs.card
         if (!card) return
 

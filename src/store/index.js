@@ -14,6 +14,9 @@ export default new Vuex.Store({
     lobby: '',
     zar: '',
     host: '',
+    handSize: 7,
+    pointsToWin: 5,
+    cardDecks: ['Base'],
     gameState: 'Home', // Home, Lobby, Game
     endLobby: false,
     blackCard: undefined,
@@ -21,61 +24,58 @@ export default new Vuex.Store({
     tempIds: {},
     hands: [],
     users: [],
-    error: ''
+    connected: false
   },
   mutations: {
   },
   actions: {
     join_lobby ({ state }) {
       vm.$socket.emit('join', { name: state.name, lobby: state.lobby }, (response) => {
-        if (response.error) {
-          console.error(response.error)
-          state.error = response.error
-          return
-        }
+        if (handleResponse(response)) return
 
         state.gameState = 'Lobby'
         state.users = response.players
         state.host = response.host
+        state.handSize = response.hand_size
+        state.cardDecks = response.card_decks
+        state.pointsToWin = response.points_to_win
 
         vm.$router.push(`/lobby/${state.lobby}`)
       })
     },
     start_game ({ state }) {
       vm.$socket.emit('start_game', (response) => {
-        if (response && response.error) console.error(response.error)
+        handleResponse(response)
       })
     },
     place_cards ({ state }, cards) {
       console.log('Cards: ', cards)
 
       vm.$socket.emit('place_cards', cards, (response) => {
-        if (response && response.error) console.error(response.error)
+        handleResponse(response)
       })
     },
     reveal_cards ({ state }, pos) {
       vm.$set(state.revealed, pos, [])
 
       vm.$socket.emit('reveal', pos, (response) => {
-        if (response && response.error) {
-          console.error(response.error)
-        }
+        handleResponse(response)
       })
     },
     winner ({ state }, pos) {
       console.log('Winner: ', pos)
 
       vm.$socket.emit('winner_selected', state.tempIds[pos], (response) => {
-        if (response && response.error) {
-          console.error(response.error)
-        }
+        handleResponse(response)
       })
     },
     leave_lobby ({ state }) {
       vm.$socket.emit('leave', name)
     },
     change_settings ({ state }, settings) {
-      vm.$socket.emit('change_settings', settings)
+      vm.$socket.emit('change_settings', settings, (response) => {
+        handleResponse(response)
+      })
     }
   },
   getters: {
@@ -87,3 +87,17 @@ export default new Vuex.Store({
     }
   }
 })
+
+function handleResponse (response) {
+  if (!response) return false
+  if (response.error) {
+    console.error(response.error)
+    vm.$root.$emit('error', response.error)
+    return true
+  }
+  if (response.info) {
+    console.info(response.info)
+    vm.$root.$emit('info', response.info)
+  }
+  return false
+}

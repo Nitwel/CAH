@@ -1,5 +1,4 @@
 import vm from '../main'
-import Events from '../events'
 
 export default {
   mutations: {
@@ -7,10 +6,21 @@ export default {
       console.log('Got Answer!')
     },
     SOCKET_connect (context, data) {
-      console.log('Connected ')
+      this.state.connected = true
+      console.log('Connected')
     },
     SOCKET_disconnect (context, data) {
-      console.log('Disconnected', data)
+      this.state.connected = false
+      this.state.gameState = 'Home'
+
+      if (['Lobby', 'Game'].includes(this.state.gameState)) {
+        vm.$router.push('/lobby/' + this.state.lobby)
+      } else {
+        vm.$router.push('/')
+      }
+
+      vm.$root.$emit('error', 'Disconnected from server')
+      console.error('Disconnected')
     },
     SOCKET_player_join (context, player) {
       if (!this.state.users.find(u => u.name === player.name)) {
@@ -25,13 +35,13 @@ export default {
     SOCKET_game_start (context, { hand, black, zar }) {
       this.state.gameState = 'Game'
       this.state.hands = hand
-      this.state.blackCard = black
+      this.state.blackCard = formatBlackCard(black)
       this.state.zar = zar
       vm.$router.push('/game/' + this.state.lobby)
     },
     SOCKET_next_round (context, { hand, black, zar, winner }) {
       this.state.hands = hand
-      this.state.blackCard = black
+      this.state.blackCard = formatBlackCard(black)
       this.state.zar = zar
       this.state.revealed = {}
       this.state.tempIds = {}
@@ -65,12 +75,19 @@ export default {
     SOCKET_cards_revealed (context, { pos, tempId, cards }) {
       var audio = new Audio('/sounds/reveal.mp3')
       audio.play()
-      Events.$emit('rotate_' + pos)
+      vm.$root.$emit('rotate_' + pos)
       vm.$set(this.state.revealed, pos, cards)
       vm.$set(this.state.tempIds, pos, tempId)
     },
     SOCKET_settings_changed (context, settings) {
-      console.log(settings)
+      this.state.pointsToWin = settings.points_to_win
+      this.state.handSize = settings.hand_size
+      this.state.cardDecks = settings.card_decks
     }
   }
+}
+
+function formatBlackCard (card) {
+  card.text = card.text.replace(/_/g, '____').replace(/&trade;/g, '™').replace(/&reg;/g, '®')
+  return card
 }
