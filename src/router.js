@@ -5,6 +5,7 @@ import About from './views/About.vue'
 import Lobby from './views/Lobby.vue'
 import Game from './views/Game.vue'
 import Profile from './views/Profile.vue'
+import Admin from './views/Admin.vue'
 import store from './store'
 
 Vue.use(VueRouter)
@@ -50,6 +51,11 @@ const routes = [
     path: '/about',
     name: 'About',
     component: About
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin
   }
 ]
 
