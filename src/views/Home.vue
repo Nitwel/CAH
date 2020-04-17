@@ -1,11 +1,11 @@
 <template>
   <div id="home">
-    <div class="title">Cards against Humanity</div>
+    <div class="title">Cards Against Humanity<div class="tag">BETA</div></div>
     <User :name="name" large hideName/>
     <div class="start">
       <Input placeholder="Your name..." v-model="name" maxlength="12"/>
       <Input v-if="showLobbyInput" placeholder="Enter lobby name..." v-model="lobby" maxlength="20"/>
-      <div>
+      <div class="btns">
         <Button v-if="!showLobbyInput" @click="resetLobby">Change Lobby</Button>
         <Button @click="onClick" :disabled="!connected">Join</Button>
       </div>
@@ -84,6 +84,17 @@ export default {
 
   .title {
     font-size: 90px;
+    position: relative;
+    .tag {
+      position: absolute;
+      font-size: 20px;
+      top: 70%;
+      right: -20px;
+      background-color: var(--red);
+      color: var(--white);
+      padding: 2px 15px;
+      border-radius: 5px;
+    }
   }
 
   .user {
@@ -96,11 +107,16 @@ export default {
     justify-content: center;
     align-items: center;
 
+    .btns {
+      display: flex;
+      justify-content: space-between;
+    }
+
     input {
       margin-bottom: 10px;
     }
 
-    .button {
+    .button:not(:first-child) {
       margin-left: 20px;
     }
   }

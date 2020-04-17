@@ -2,7 +2,7 @@
   <div class="game">
     <div class="title">{{title}}</div>
     <div class="points">
-      <span v-for="user in points" :key="user.name">{{zar == user.name? '(zar)': ''}} {{user.name}} has {{user.points}} points.</span>
+      <span v-for="user in points" :key="user.name">{{zar == user.name? '(czar)': ''}} {{user.name}} has {{user.points}} points.</span>
     </div>
     <div class="table">
       <div class="slots">
@@ -92,9 +92,9 @@ export default {
         if (this.allPlaced && !this.allRevealed) {
           return `${this.zar} is revealing the cards!`
         } else if (this.allRevealed) {
-          return `${this.zar} The zar is selecting is favorite!`
+          return `${this.zar} is selecting is favorite!`
         } else {
-          return `Place your cards! ${this.zar} is the zar.`
+          return `Place your cards! ${this.zar} is the czar.`
         }
       }
     }
