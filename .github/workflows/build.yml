@@ -38,7 +38,7 @@ jobs:
         name: Dist
         path: ./dist
     
-    - name: FTP-Deploy-Action
+    - name: Deploy to server
       uses: SamKirkland/FTP-Deploy-Action@3.0.0
       with:
         ftp-server: ftp://178.254.38.252/httpdocs
