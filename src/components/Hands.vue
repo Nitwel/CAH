@@ -1,7 +1,7 @@
 <template>
   <div class="hands" ref="hand" v-if="render">
     <Card v-for="(card, index) in hands" :key="index" ref="card" :id="index" :selectable="!placed && !disabled" :style="{'--slotted-time': `${plotAnimation}ms`}">
-      {{card}}
+      <span v-html="card"></span>
       <template v-slot:container>
         <transition name="scaleSelect">
           <Button v-if="placeable && index == inSlot[blackCard.pick].id" class="accept abs" icon="done" rounded @click="onSelect"></Button>

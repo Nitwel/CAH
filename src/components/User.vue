@@ -3,7 +3,7 @@
     <avataaar v-if="!invite" class="image" avatar-style="Circle" v-bind="look"></avataaar>
     <img v-else class="invite" src="../assets/add.svg" alt="add">
     <div v-if="name && !hideName" class="name">{{name}}</div>
-    <div class="info" v-if="!invite">
+    <div class="info" v-if="!invite && user">
       <span class="title">Player info</span>
       <span>Name: {{name}}</span>
       <span>Points: {{user.points || 0}}</span>

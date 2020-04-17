@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "server": "ssh Nitwel@217.160.171.237 -p 22"
+    "server": "ssh root@178.254.38.252 -p 22"
   },
   "dependencies": {
     "core-js": "^3.6.4",

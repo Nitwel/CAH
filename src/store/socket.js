@@ -88,6 +88,6 @@ export default {
 }
 
 function formatBlackCard (card) {
-  card.text = card.text.replace(/_/g, '____').replace(/&trade;/g, '™').replace(/&reg;/g, '®')
+  card.text = card.text.replace(/_/g, '____')
   return card
 }

@@ -1,9 +1,9 @@
 <template>
   <div class="game">
     <div class="title">{{title}}</div>
-    <!-- <div class="points">
-      <span v-for="user in points" :key="user.name">{{user.name}} has {{user.points}} points.</span>
-    </div> -->
+    <div class="points">
+      <span v-for="user in points" :key="user.name">{{zar == user.name? '(zar)': ''}} {{user.name}} has {{user.points}} points.</span>
+    </div>
     <div class="table">
       <div class="slots">
         <div class="user-slot" v-for="(user, pos) in users" :key="user.name">
@@ -139,8 +139,8 @@ export default {
 
   .points {
     position: absolute;
-    bottom: 40px;
-    right: 10px;
+    top: 40px;
+    left: 10px;
     display: flex;
     flex-direction: column;
   }
