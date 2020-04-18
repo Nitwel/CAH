@@ -22,9 +22,12 @@ export default new Vuex.Store({
     blackCard: undefined,
     revealed: {},
     tempIds: {},
+    tempToUser: {},
     hands: [],
     users: [],
-    connected: false
+    connected: false,
+    winner: '',
+    timer: 0
   },
   mutations: {
   },

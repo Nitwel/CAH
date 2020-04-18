@@ -39,16 +39,30 @@ export default {
       this.state.zar = zar
       vm.$router.push('/game/' + this.state.lobby)
     },
-    SOCKET_next_round (context, { hand, black, zar, winner }) {
+    async SOCKET_next_round (context, { hand, black, zar, winner, tempIds }) {
+      this.state.tempToUser = tempIds
+      this.state.winner = winner
+      this.state.timer = 10
+
+      this.state.users.forEach((user, index) => {
+        if (user.name === winner) vm.$set(this.state.users[index], 'points', user.points + 1)
+      })
+
+      while (this.state.timer > 0) {
+        this.state.timer -= 1
+        await timeout(1000)
+      }
+
       this.state.hands = hand
       this.state.blackCard = formatBlackCard(black)
       this.state.zar = zar
       this.state.revealed = {}
       this.state.tempIds = {}
+      this.state.tempToUser = {}
+      this.state.winner = ''
 
       this.state.users.forEach((user, index) => {
         vm.$set(this.state.users[index], 'placed', false)
-        if (user.name === winner) vm.$set(this.state.users[index], 'points', user.points + 1)
       })
     },
     SOCKET_game_end (context, points) {
@@ -57,6 +71,8 @@ export default {
       this.state.zar = undefined
       this.state.revealed = {}
       this.state.tempIds = {}
+      this.tempToUser = {}
+      this.state.winner = ''
 
       this.state.users.forEach((user, index) => {
         vm.$set(this.state.users[index], 'placed', false)
@@ -90,4 +106,8 @@ export default {
 function formatBlackCard (card) {
   card.text = card.text.replace(/_/g, '____')
   return card
+}
+
+function timeout (ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }

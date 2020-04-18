@@ -16,10 +16,11 @@
             @click.native="selected(pos)"
           >
             <User v-if="!allPlaced" :name="user.name" :small="!user.placed" :x-small="user.placed" class="abs"/>
+            <User v-if="winnerSelected" :name="posToUser[pos]" x-small class="abs"/>
             <span class="questionmark abs" v-if="user.placed && !isRevealed(pos)">?</span>
             <span class="revealed" v-if="isRevealed(pos)" v-html="revealed[pos][i]"></span>
             <transition name="scaleSelect">
-              <Button v-if="isZar && allRevealed && i == blackCard.pick - 1" class="winner abs" icon="done" rounded @click="onSelectWinner(pos)"></Button>
+              <Button v-if="isZar && allRevealed && i == blackCard.pick - 1 && !winnerSelected" class="winner abs" icon="done" rounded @click="onSelectWinner(pos)"></Button>
             </transition>
           </Card>
         </div>
@@ -60,6 +61,9 @@ export default {
     allRevealed () {
       return this.$store.getters.allRevealed
     },
+    winnerSelected () {
+      return this.$store.state.tempToUser && Object.values(this.$store.state.tempToUser).length > 0
+    },
     users () {
       if (this.allPlaced && !this.isZar) {
         return this.$store.state.users.filter(u => u.name !== this.$store.state.zar)
@@ -76,10 +80,23 @@ export default {
     revealed () {
       return this.$store.state.revealed
     },
+    posToUser () {
+      const posToTemp = this.$store.state.tempIds
+      const tempToUser = this.$store.state.tempToUser
+      const posToUser = {}
+      Object.entries(posToTemp).forEach(entrie => {
+        posToUser[entrie[0]] = tempToUser[entrie[1]]
+      })
+      return posToUser
+    },
     zar () {
       return this.$store.state.zar
     },
     title () {
+      if (this.winnerSelected) {
+        return `${this.$store.state.winner} won. Next round starts in ${this.$store.state.timer}s.`
+      }
+
       if (this.isZar) {
         if (this.allPlaced && !this.allRevealed) {
           return 'Its your turn to reveal the cards!'

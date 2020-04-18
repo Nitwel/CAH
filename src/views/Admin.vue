@@ -4,11 +4,11 @@
     <button @click="onClick">Send</button>
     <h1 class="games-sum">{{games.length}} Games are running.</h1>
     <div class="games">
-      <span v-for="game in games" :key="game.name">{{game.name}} with {{game.players}} players in {{game.state}}</span>
+      <span v-for="game in games" :key="game.name">{{game.name}} with {{game.players.length}} players.</span>
     </div>
     <h1 class="players-sum">{{players.length}} Players total</h1>
     <div class="players">
-      <span v-for="player in players" :key="player">{{player}} </span>
+      <span v-for="player in players" :key="player.name">{{player.name}} </span>
     </div>
   </div>
 </template>
