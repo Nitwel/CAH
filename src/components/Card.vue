@@ -1,6 +1,6 @@
 <template>
-  <div class="card">
-    <div class="card-element" :class="{indeterminate, small, large, black, selectable}" ref="card">
+  <div class="card" :class="{small, xSmall}">
+    <div class="card-element" :class="{indeterminate, black, selectable}" ref="card">
       <slot />
       <svg v-if="indeterminate" class="border" viewBox="0 0 200 300">
         <rect x="5" y="5" width="190" height="290" rx="20" ry="20" stroke="var(--light-grey)" stroke-width="5" stroke-dasharray="20 20" fill="transparent"/>
@@ -26,7 +26,7 @@ export default {
       type: Boolean,
       default: false
     },
-    large: {
+    xSmall: {
       type: Boolean,
       default: false
     },
@@ -62,6 +62,8 @@ export default {
   --rotation-time: 600ms;
   width: 200px;
   height: 300px;
+  font-weight: 500;
+  font-size: 20px;
 
   ::v-deep .abs {
     position: absolute;
@@ -91,9 +93,6 @@ export default {
     transition: 200ms ease-in-out;
 
     user-select: none;
-
-    font-weight: 500;
-    font-size: 20px;
 
     &.black {
       background-color: black;
@@ -146,6 +145,61 @@ export default {
       & > * {
         backface-visibility: hidden;
       }
+    }
+  }
+
+  &.small {
+    font-size: 16px;
+    width: 150px;
+    height: 225px;
+
+    .card-element {
+      border-radius: 15px;
+      padding: 18.75px 15px;
+    }
+
+    @media (max-width: 800px) {
+      font-size: 12px;
+      width: 100px;
+      height: 150px;
+
+      .card-element {
+        border-radius: 10px;
+        padding: 12.5px 10px;
+      }
+    }
+  }
+
+  &.xSmall {
+    font-size: 12px;
+    width: 120px;
+    height: 180px;
+
+    .card-element {
+      border-radius: 10px;
+      padding: 12.5px 10px;
+    }
+  }
+
+  @media (min-width: 801px) and (max-width: 1000px) {
+    font-size: 16px;
+    width: 150px;
+    height: 225px;
+
+    .card-element {
+      border-radius: 15px;
+      padding: 18.75px 15px;
+    }
+  }
+
+  @media (max-width: 800px) {
+    font-size: 12px;
+    width: 100px;
+    height: 150px;
+
+    .card-element {
+      border-radius: 10px;
+      padding: 12.5px 10px;
     }
   }
 }

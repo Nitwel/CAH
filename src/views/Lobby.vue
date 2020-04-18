@@ -128,6 +128,14 @@ export default {
 
   .title {
     font-size: 90px;
+
+    @media (max-width: 1000px) {
+      font-size: 70px;
+    }
+
+    @media (max-width: 800px) {
+      font-size: 50px;
+    }
   }
 
   .users {
@@ -136,10 +144,22 @@ export default {
     flex-wrap: wrap;
     margin: 50px 0;
 
+    @media (max-width: 1000px) {
+      margin: 10px 0;
+    }
+
     .user {
       display: flex;
       align-items: center;
       flex-direction: column;
+
+      @media (max-width: 1000px) {
+        --user-width: 140px;
+      }
+
+      @media (max-width: 800px) {
+        --user-width: 100px;
+      }
 
       .tropy {
         margin-top: 15px;
@@ -177,6 +197,14 @@ export default {
       }
     }
 
+    @media (max-width: 1000px) {
+      font-size: 20px;
+
+      input {
+        font-size: 15px;
+      }
+    }
+
     ::v-deep .multiselect {
       margin: 2px 0;
       min-width: 300px;
@@ -206,6 +234,10 @@ export default {
         font-size: 20px;
         font-weight: 500;
 
+        @media (max-width: 1000px) {
+          font-size: 15px;
+        }
+
         .multiselect__tags-wrap {
 
           .multiselect__tag {
@@ -217,8 +249,12 @@ export default {
   }
 
   .actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
     .button {
-      margin: 0 5px;
+      margin: 5px 10px;
     }
   }
 

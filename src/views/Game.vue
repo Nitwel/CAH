@@ -12,6 +12,8 @@
             :key="pos + '-' + i"
             :event-id="pos"
             :indeterminate="!user.placed"
+            :small="blackCard.pick > 1"
+            :xSmall="blackCard.pick > 2"
             :class="{placed: user.placed, clickable: isZar && allPlaced && !allRevealed}"
             @click.native="selected(pos)"
           >
@@ -26,7 +28,7 @@
         </div>
         <div class="user-slot" v-if="!isZar && !allPlaced">
           <Effect v-for="p in blackCard.pick" :key="p" :trigger="'slot'+p" :time="500" effect="pop">
-            <Card class="user-card-fields" :id="p" indeterminate>
+            <Card class="user-card-fields" :id="p" indeterminate :small="blackCard.pick > 1" :xSmall="blackCard.pick > 2">
               <img class="add" src="../assets/add-full.svg" alt="add">
             </Card>
           </Effect>
@@ -152,6 +154,13 @@ export default {
     position: absolute;
     top: 30px;
     font-size: 40px;
+
+    @media (max-width: 1000px) {
+      font-size: 30px;
+    }
+    @media (max-width: 800px) {
+      font-size: 20px;
+    }
   }
 
   .points {
@@ -160,6 +169,9 @@ export default {
     left: 10px;
     display: flex;
     flex-direction: column;
+    @media (max-width: 1000px) {
+      top: 60px;
+    }
   }
 
   .table {
@@ -167,6 +179,10 @@ export default {
     justify-content: center;
     align-items: center;
     max-width: 90%;
+
+    @media (max-width: 800px) {
+      flex-direction: column-reverse;
+    }
 
     .slots {
       display: flex;
@@ -233,12 +249,19 @@ export default {
         .add {
           margin-top: 8px;
           width: 100px;
+
+          @media (max-width: 1000px) {
+            margin-top: 0px;
+            width: 70px;
+          }
         }
       }
     }
 
     .black {
-      margin-left: 50px;
+      @media (min-width: 801px) {
+        margin-left: 50px;
+      }
     }
   }
 }

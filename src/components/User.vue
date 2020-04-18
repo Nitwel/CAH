@@ -97,6 +97,10 @@ export default {
     .name {
       display: none;
     }
+
+    @media (max-width: 1000px) {
+      --user-width: 60px;
+    }
   }
 
   &.xSmall {

@@ -85,6 +85,16 @@ export default {
   .title {
     font-size: 90px;
     position: relative;
+    text-align: center;
+
+    @media (max-width: 1000px) {
+      font-size: 70px;
+    }
+
+    @media (max-width: 800px) {
+      font-size: 50px;
+    }
+
     .tag {
       position: absolute;
       font-size: 20px;
@@ -94,6 +104,15 @@ export default {
       color: var(--white);
       padding: 2px 15px;
       border-radius: 5px;
+    }
+
+    @media (max-width: 600px) {
+      .tag {
+        left: 50%;
+        right: unset;
+        top: 100%;
+        transform: translate(-50%, 0%);
+      }
     }
   }
 
@@ -109,15 +128,17 @@ export default {
 
     .btns {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
+      flex-wrap: wrap;
+
+      .button {
+        margin: 5px 10px;
+      }
     }
 
     input {
       margin-bottom: 10px;
-    }
-
-    .button:not(:first-child) {
-      margin-left: 20px;
+      max-width: 90vw;
     }
   }
 }

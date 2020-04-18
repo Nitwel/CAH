@@ -1,6 +1,11 @@
 <template>
-  <div class="hands" ref="hand" v-if="render">
-    <Card v-for="(card, index) in hands" :key="index" ref="card" :id="index" :selectable="!placed && !disabled" :style="{'--slotted-time': `${plotAnimation}ms`}">
+  <div class="hands" ref="hand" v-if="render" :style="{'paddingRight': `${-cardMargin + 10}px`}">
+    <Card
+      v-for="(card, index) in hands"
+      :key="index" ref="card" :id="index"
+      :selectable="!placed && !disabled"
+      :style="{'--slotted-time': `${plotAnimation}ms`, 'marginRight': `${cardMargin}px`}"
+    >
       <span v-html="card"></span>
       <template v-slot:container>
         <transition name="scaleSelect">
@@ -37,14 +42,13 @@ export default {
       placed: false,
       plotAnimation: 300,
       slotPositions: undefined,
-      render: true
+      render: true,
+      windowWidth: window.innerWidth
     }
   },
   watch: {
     allPlaced (to, from) {
       if (to && !from) {
-        console.log(this.inSlot)
-
         Object.values(this.inSlot).forEach(s => document.body.removeChild(s))
       } else if (!to && from) {
         this.placed = false
@@ -59,6 +63,14 @@ export default {
     }
   },
   computed: {
+    cardMargin () {
+      let cardWidth = 200
+      if (this.windowWidth <= 1000) cardWidth = 150
+      if (this.windowWidth <= 800) cardWidth = 120
+      let margin = ((this.windowWidth - 20) - cardWidth * (this.hands.length - 1)) / this.hands.length
+      if (margin > 10) margin = 10
+      return margin
+    },
     hands () {
       return this.$store.state.hands
     },
@@ -70,12 +82,15 @@ export default {
     }
   },
   mounted () {
-    // document.addEventListener('touchmove', this.drag)
-    // document.addEventListener('touchstart', this.dragstart)
-    // document.addEventListener('touchend', this.dragend)
+    document.addEventListener('touchmove', this.drag)
+    document.addEventListener('touchstart', this.dragstart)
+    document.addEventListener('touchend', this.dragend)
     document.addEventListener('mousemove', this.drag)
     document.addEventListener('mousedown', this.dragstart)
     document.addEventListener('mouseup', this.dragend)
+    document.body.onresize = ($event) => {
+      this.windowWidth = window.innerWidth
+    }
   },
   methods: {
     calcSlotPositions () {
@@ -94,8 +109,15 @@ export default {
     drag ($event) {
       if (!this.dragging) return
 
-      let top = $event.clientY - this.startPos.top
-      let left = $event.clientX - this.startPos.left
+      let left, top
+
+      if ($event.changedTouches) {
+        top = $event.changedTouches[0].clientY - this.startPos.top
+        left = $event.changedTouches[0].clientX - this.startPos.left
+      } else {
+        top = $event.clientY - this.startPos.top
+        left = $event.clientX - this.startPos.left
+      }
 
       Object.entries(this.slotPositions).forEach(entrie => {
         const id = entrie[0]
@@ -131,6 +153,7 @@ export default {
     },
     dragstart ($event) {
       if (this.placed || this.disabled) return
+
       const el = Object.values(this.$refs.card).map(el => el.$el).find(el => el === $event.target || el.contains($event.target))
 
       if (!el || el.classList.contains('slotted') || el.classList.contains('placed')) return
@@ -139,14 +162,24 @@ export default {
 
       if (!Object.values(this.inSlot).includes(this.dragging)) { document.body.appendChild(this.dragging) }
       this.dragging.classList.add('global')
+      if (this.blackCard.pick > 2) this.dragging.classList.add('xSmall')
+      else if (this.blackCard.pick > 1) this.dragging.classList.add('small')
 
       this.dragging.style.top = pos.top + 'px'
       this.dragging.style.left = pos.left + 'px'
 
-      this.startPos = {
-        top: $event.clientY - pos.top,
-        left: $event.clientX - pos.left
+      let left, top
+
+      if ($event.changedTouches) {
+        top = $event.changedTouches[0].clientY - pos.top
+        left = $event.changedTouches[0].clientX - pos.left
+      } else {
+        top = $event.clientY - pos.top
+        left = $event.clientX - pos.left
       }
+
+      this.startPos = { top, left }
+
       Object.entries(this.inSlot).forEach(entrie => {
         if (entrie[1] === this.dragging) {
           this.nearSlot = entrie[0]
@@ -161,7 +194,7 @@ export default {
       if (!this.nearSlot) {
         this.dragging.style.top = ''
         this.dragging.style.left = ''
-        this.dragging.classList.remove('global')
+        this.dragging.classList.remove('global', 'small', 'xSmall')
         this.$refs.hand.appendChild(this.dragging)
 
         const audio = new Audio('/sounds/zpfw.mp3')
@@ -172,7 +205,7 @@ export default {
           oldSlot.style.top = ''
           oldSlot.style.left = ''
           oldSlot.style.transform = ''
-          oldSlot.classList.remove('global')
+          oldSlot.classList.remove('global', 'small', 'xSmall')
           this.$refs.hand.appendChild(oldSlot)
         }
 
@@ -211,17 +244,20 @@ export default {
 <style scoped lang="scss">
 .hands {
   position: absolute;
-  bottom: -200px;
-  padding: 30px;
+  top: 83%;
+  padding: 0 10px;
   left: 50%;
   transform: translate(-50%, 0);
-  overflow: auto;
   display: flex;
   justify-content: center;
-  align-items: center;
+  max-width: 100vw;
 
-  .card {
-    margin: 0px 10px;
+  @media (max-width: 1000px) {
+    top: 85%;
+  }
+
+  @media (max-width: 800px) {
+    top: 89%;
   }
 }
 </style>
