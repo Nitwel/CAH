@@ -10,6 +10,10 @@
         <Button @click="onClick" :disabled="!connected">Join</Button>
       </div>
     </div>
+    <div class="footer">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScPaRQoTIMgzjF6Bmgbi6TESD2KnfzohOG0opd9qN4BJ21YTg/viewform?usp=sf_link">Give feedback</a>
+      <a href="https://github.com/sponsors/Nitwel">Sponsor me!</a>
+    </div>
   </div>
 </template>
 
@@ -150,6 +154,23 @@ export default {
       margin-bottom: 10px;
       max-width: 90vw;
     }
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 5px;
+    font-size: 20px;
+
+    a {
+      color: var(--dark-grey);
+      text-decoration: none;
+      margin: 0 10px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
   }
 }
 </style>
