@@ -21,13 +21,13 @@
       </div>
       <div>
         <label>Points to win</label>
-        <input v-if="host" type="number" v-model="pointsToWin">
-        <input v-else type="text" :value="$store.state.pointsToWin" disabled>
+        <Input v-if="host" type="number" v-model="pointsToWin"/>
+        <Input v-else type="text" :value="$store.state.pointsToWin" disabled/>
       </div>
       <div>
         <label>Hand size</label>
-        <input v-if="host" type="number" v-model="handSize">
-        <input v-else type="text" :value="$store.state.handSize" disabled>
+        <Input v-if="host" type="number" v-model="handSize"/>
+        <Input v-else type="text" :value="$store.state.handSize" disabled/>
       </div>
     </div>
     <div class="actions" v-if="host">
@@ -153,14 +153,6 @@ export default {
       align-items: center;
       flex-direction: column;
 
-      @media (max-width: 1000px) {
-        --user-width: 140px;
-      }
-
-      @media (max-width: 800px) {
-        --user-width: 100px;
-      }
-
       .tropy {
         margin-top: 15px;
         font-size: 50px;
@@ -179,35 +171,22 @@ export default {
     margin-bottom: 20px;
     font-size: 25px;
 
+    @media (max-width: 1000px) {
+      font-size: 25px;
+    }
+
+    @media (max-width: 800px) {
+      font-size: 20px;
+    }
+
     > div {
       display: flex;
       flex-direction: column;
     }
 
-    input {
-      padding: 8px;
-      color: var(--dark-grey);
-      border: 4px solid var(--grey);
-      border-radius: 10px;
-      font-size: 20px;
-      font-weight: 500;
-
-      &:disabled {
-        background: var(--white);
-      }
-    }
-
-    @media (max-width: 1000px) {
-      font-size: 20px;
-
-      input {
-        font-size: 15px;
-      }
-    }
-
     ::v-deep .multiselect {
       margin: 2px 0;
-      min-width: 300px;
+      max-width: 90vw;
 
       .multiselect__select {
         height: 100%;
@@ -235,7 +214,17 @@ export default {
         font-weight: 500;
 
         @media (max-width: 1000px) {
+          font-size: 20px;
+        }
+
+        @media (max-width: 800px) {
+          padding: 4px 30px 0px 4px;
           font-size: 15px;
+          border: 3px solid var(--grey);
+
+          .multiselect__tags-wrap .multiselect__tag {
+            margin-bottom: 0px;
+          }
         }
 
         .multiselect__tags-wrap {

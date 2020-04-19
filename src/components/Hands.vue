@@ -66,8 +66,10 @@ export default {
     cardMargin () {
       let cardWidth = 200
       if (this.windowWidth <= 1000) cardWidth = 150
-      if (this.windowWidth <= 800) cardWidth = 120
-      let margin = ((this.windowWidth - 20) - cardWidth * (this.hands.length - 1)) / this.hands.length
+      if (this.windowWidth <= 800) cardWidth = 100
+      console.log(cardWidth)
+
+      let margin = ((this.windowWidth - 20) - cardWidth * this.hands.length) / this.hands.length
       if (margin > 10) margin = 10
       return margin
     },
@@ -147,6 +149,11 @@ export default {
           }
         }
       })
+
+      if (top < 0) top = 0
+      if (left < 0) left = 0
+      if (top + this.dragging.clientHeight > window.innerHeight) top = window.innerHeight - this.dragging.clientHeight
+      if (left + this.dragging.clientWidth > window.innerWidth) left = window.innerWidth - this.dragging.clientWidth
 
       this.dragging.style.top = top + 'px'
       this.dragging.style.left = left + 'px'
@@ -244,20 +251,16 @@ export default {
 <style scoped lang="scss">
 .hands {
   position: absolute;
-  top: 83%;
+  top: 100%;
   padding: 0 10px;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   max-width: 100vw;
 
   @media (max-width: 1000px) {
-    top: 85%;
-  }
-
-  @media (max-width: 800px) {
-    top: 89%;
+    transform: translate(-50%, -80%);
   }
 }
 </style>

@@ -118,6 +118,16 @@ export default {
 
   .user {
     margin: 50px 0;
+
+    @media (max-width: 1000px) {
+      --user-width: 160px;
+      margin: 50px 0 30px 0;
+    }
+
+    @media (max-width: 800px) {
+      --user-width: 120px;
+      margin: 50px 0 20px 0;
+    }
   }
 
   .start {

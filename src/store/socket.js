@@ -42,7 +42,7 @@ export default {
     async SOCKET_next_round (context, { hand, black, zar, winner, tempIds }) {
       this.state.tempToUser = tempIds
       this.state.winner = winner
-      this.state.timer = 10
+      this.state.timer = 21
 
       this.state.users.forEach((user, index) => {
         if (user.name === winner) vm.$set(this.state.users[index], 'points', user.points + 1)
@@ -99,6 +99,9 @@ export default {
       this.state.pointsToWin = settings.points_to_win
       this.state.handSize = settings.hand_size
       this.state.cardDecks = settings.card_decks
+    },
+    SOCKET_host (context, host) {
+      this.state.host = host
     }
   }
 }

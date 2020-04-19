@@ -39,6 +39,18 @@ export default {
     font-weight: 500;
     cursor: pointer;
 
+    @media (max-width: 1000px) {
+      height: 48px;
+      font-size: 25px;
+      padding: 5px 20px;
+    }
+
+    @media (max-width: 800px) {
+      height: 42px;
+      font-size: 20px;
+      padding: 5px 15px;
+    }
+
     &:focus, &:hover {
         background-color: var(--button-color);
     }

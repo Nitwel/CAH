@@ -98,7 +98,7 @@ export default {
       display: none;
     }
 
-    @media (max-width: 1000px) {
+    @media (max-width: 800px) {
       --user-width: 60px;
     }
   }
@@ -108,6 +108,20 @@ export default {
     .name {
       display: none;
     }
+
+    @media (max-width: 800px) {
+      --user-width: 40px;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    --user-width: 100px;
+    font-size: 25px;
+  }
+
+  @media (max-width: 800px) {
+    --user-width: 60px;
+    font-size: 20px;
   }
 
   &.invite {
