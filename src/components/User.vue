@@ -163,13 +163,14 @@ export default {
   }
 
   .info {
-    z-index: 30;
+    z-index: 300;
     position: absolute;
-    top: 0;
-    left: 80%;
+    top: 90%;
+    left: 50%;
     background-color: var(--white);
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
     display: none;
+    transform: translate(-50%, 0%);
 
     padding: 8px 16px;
     flex-direction: column;

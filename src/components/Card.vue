@@ -1,10 +1,10 @@
 <template>
   <div class="card" :class="{small, xSmall}">
     <div class="card-element" :class="{indeterminate, black, selectable}" ref="card">
-      <slot />
       <svg v-if="indeterminate" class="border" viewBox="0 0 200 300">
         <rect x="5" y="5" width="190" height="290" rx="20" ry="20" stroke="var(--light-grey)" stroke-width="5" stroke-dasharray="20 20" fill="transparent"/>
       </svg>
+      <slot />
     </div>
     <slot name="container"/>
   </div>
