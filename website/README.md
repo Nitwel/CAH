@@ -1,4 +1,4 @@
-# cah
+# CAH Website
 ![CI](https://github.com/Nitwel/CAH/workflows/CI/badge.svg)
 
 ## Project setup
