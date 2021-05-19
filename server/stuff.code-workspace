@@ -1,0 +1,35 @@
+{
+	"folders": [
+		{
+			"name": "webseite",
+			"path": "..\\BWG\\webseite"
+		},
+		{
+			"name": "extension-toolkit",
+			"path": "..\\..\\Programmieren\\Directus\\extension-toolkit"
+		},
+		{
+			"name": "cah",
+			"path": "..\\cah"
+		},
+		{
+			"name": "test-sdk",
+			"path": "..\\..\\Programmieren\\Directus\\test-sdk"
+		},
+		{
+			"name": "CardsAgainstHumanity",
+			"path": "."
+		},
+		{
+			"name": "next",
+			"path": "..\\..\\Programmieren\\Directus\\next"
+		},
+		{
+			"name": "API-Specification",
+			"path": "..\\..\\Programmieren\\Directus\\API-Specification"
+		},
+		{
+			"path": "..\\..\\Programmieren\\Directus\\md interface\\next\\app"
+		}
+	]
+}

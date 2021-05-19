@@ -1,0 +1,4 @@
+# Project exclude paths
+/venv/
+dev.bat
+__pycache__
