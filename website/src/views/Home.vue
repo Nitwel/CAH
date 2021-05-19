@@ -14,6 +14,7 @@
       <a href="https://docs.google.com/forms/d/e/1FAIpQLScPaRQoTIMgzjF6Bmgbi6TESD2KnfzohOG0opd9qN4BJ21YTg/viewform?usp=sf_link" target="_blank">Give feedback</a>
       <a href="https://github.com/sponsors/Nitwel" target="_blank">Sponsor me!</a>
       <a href="disclaimer.html">Disclamer</a>
+      <a href="https://github.com/Nitwel/CAH">Source Code</a>
     </div>
     <span class="version">{{version}}</span>
   </div>
