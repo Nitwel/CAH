@@ -1,8 +1,8 @@
 # CAH by Nitwel
 
-This is the sourcecode of https://playcah.de
+This project is now maintained under [Nitwel/playCAH](https://github.com/Nitwel/playCAH).
 
-This projects goal is to bring Cards Against Humanity into the web.
+The projects goal is to bring Cards Against Humanity into the web.
 The website is run with Vue and the backend persists of a python websocket server.
 
 It can be played with more than 8 players and more or less supports usage via the phone.
